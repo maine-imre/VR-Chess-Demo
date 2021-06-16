@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 243666827}
   - component: {fileID: 243666826}
   - component: {fileID: 243666828}
+  - component: {fileID: 243666829}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -158,7 +159,7 @@ MonoBehaviour:
   x_tile_count: 9
   y_tile_count: 9
   z_tile_count: 9
-  scalar: 15
+  scalar: 20
 --- !u!4 &243666827
 Transform:
   m_ObjectHideFlags: 0
@@ -185,6 +186,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28be124ea97c443d97e50ed20780e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wPawn: {fileID: 1006356879557798, guid: 391882f14be491c40962add653844907, type: 3}
+  bPawn: {fileID: 1867195236767680, guid: b1d95c04dd54e434aa65855a0f77d30f, type: 3}
+  wKnight: {fileID: 1992623236052302, guid: 85ad2c556fdbd5747ac7f5f67f10e59b, type: 3}
+  bKnight: {fileID: 1179637952412708, guid: a007978aa14da3945b0f6655f65cc278, type: 3}
+  wBishop: {fileID: 1028868664329696, guid: 1c0f2faf14460a5478057fd4e0575576, type: 3}
+  bBishop: {fileID: 1672242659374470, guid: f005021ceced8b240983e71a3d481180, type: 3}
+  wRook: {fileID: 1971375302472462, guid: f1fc282519e5c4a4daaa864f9c3d446f, type: 3}
+  bRook: {fileID: 1211746330687442, guid: a72c2cd1520039b4084a4a33dfeccf7e, type: 3}
+  wQueen: {fileID: 1945632463053948, guid: be3573ba2ba53ea4f8979e64874c493d, type: 3}
+  bQueen: {fileID: 1471985601831630, guid: 664a4dc6e997f5f47a9233db911328ac, type: 3}
+  wKing: {fileID: 1389686872840900, guid: 27d2608cb94ae2d44811af52793c3562, type: 3}
+  bKing: {fileID: 1810274083847610, guid: 309659d4eb727d74d91c4875a85edc00, type: 3}
+--- !u!114 &243666829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243666825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fc9c4ae371a48f0927797423cd31a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +222,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -281,10 +307,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422413e62fa014c6dba0431ce6a9a296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSpeed: 60
+  mainSpeed: 20
   shiftAdd: 40
   maxShift: 500
   camSens: 0.15
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineThickness: 1.25
+  lineIntensity: 0.5
+  fillAmount: 0.2
+  lineColor0: {r: 1, g: 0.9811383, b: 0.15566039, a: 1}
+  lineColor1: {r: 0.9150943, g: 0, b: 0.7768265, a: 1}
+  lineColor2: {r: 0, g: 1, b: 0.8102691, a: 1}
+  lineColor3: {r: 1, g: 0, b: 0, a: 1}
+  lineColor4: {r: 0, g: 1, b: 0, a: 1}
+  lineColor5: {r: 0, g: 0, b: 1, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 1
+  fillColor: {r: 0, g: 0, b: 1, a: 1}
+  useFillColor: 0
+  cornerOutlines: 0
+  addLinesBetweenColors: 0
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 0}
+  autoEnableOutlines: 0
+  outlineCamera: {fileID: 0}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 0}
+  extraRenderTexture: {fileID: 0}
 --- !u!1 &1917498241
 GameObject:
   m_ObjectHideFlags: 0

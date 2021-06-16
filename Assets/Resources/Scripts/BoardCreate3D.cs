@@ -9,9 +9,9 @@ public class BoardCreate3D : MonoBehaviour
     public GameObject dark_cube;
     public GameObject light_cube;
 
-    float width;
-    float height;
-    float depth; 
+    public float width;
+    public float height;
+    public float depth; 
 
     // xyz 
     public int x_tile_count;

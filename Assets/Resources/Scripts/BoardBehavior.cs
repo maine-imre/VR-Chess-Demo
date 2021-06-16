@@ -19,7 +19,6 @@ public class BoardBehavior : MonoBehaviour
     {
         boardCreate3D = GetComponent<BoardCreate3D>();
         tileBehavior = transform.GetChild(0).GetComponent<TileBehavior>();
-        board = new GameObject[boardCreate3D.x_tile_count, boardCreate3D.y_tile_count, boardCreate3D.z_tile_count]; 
     }
 
     // Update is called once per frame
