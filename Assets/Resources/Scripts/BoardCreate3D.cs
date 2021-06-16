@@ -6,8 +6,8 @@ public class BoardCreate3D : MonoBehaviour
 {
 
     // Tiles (Cubes)
-    public GameObject dark_cube;
-    public GameObject light_cube;
+    public GameObject dark_tile;
+    public GameObject light_tile;
 
     public float width;
     public float height;
@@ -27,9 +27,9 @@ public class BoardCreate3D : MonoBehaviour
     void Awake()
     {
         // Get the dimensions of the cube (it will be the same since its a cube)
-        width = dark_cube.transform.localScale.x;
-        height = dark_cube.transform.localScale.y;
-        depth = dark_cube.transform.localScale.z;
+        width = dark_tile.transform.localScale.x;
+        height = dark_tile.transform.localScale.y;
+        depth = dark_tile.transform.localScale.z;
 
         // Initialize the board array
         board = new GameObject[x_tile_count, y_tile_count, z_tile_count];
@@ -50,11 +50,11 @@ public class BoardCreate3D : MonoBehaviour
                 {
                     if ((i + j + k) % 2 == 0)
                     {
-                        board[i, j, k] = Instantiate(light_cube, new Vector3(width * i, height * j, depth * k) * scalar, Quaternion.identity);
+                        board[i, j, k] = Instantiate(light_tile, new Vector3(width * i, height * j, depth * k) * scalar, Quaternion.identity);
                     }
                     else
                     {
-                        board[i, j, k] = Instantiate(dark_cube, new Vector3(width * i, height * j, depth * k) * scalar, Quaternion.identity);
+                        board[i, j, k] = Instantiate(dark_tile, new Vector3(width * i, height * j, depth * k) * scalar, Quaternion.identity);
                     }
 
                     board[i, j, k].transform.parent = gameObject.transform;

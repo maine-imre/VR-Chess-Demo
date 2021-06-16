@@ -5,7 +5,7 @@ using UnityEngine;
 public class AddPieces : MonoBehaviour
 {
 
-    BoardCreate3D boardCreate3D;
+    BoardCreate3D bc;
 
     // Pieces
     public GameObject wPawn;
@@ -30,17 +30,20 @@ public class AddPieces : MonoBehaviour
     GameObject[,,] board;
 
     // to subtract the diameter of the cells
-    Vector3 diameter = new Vector3(0, 0.2f, 0);
+    public Vector3 diameter;
 
     // Start is called before the first frame update
     void Start()
     {
-        boardCreate3D = gameObject.GetComponent<BoardCreate3D>();
+        bc = gameObject.GetComponent<BoardCreate3D>();
 
-        x_tile_count = boardCreate3D.x_tile_count;
-        y_tile_count = boardCreate3D.y_tile_count;
-        z_tile_count = boardCreate3D.z_tile_count;
-        board = boardCreate3D.board;
+        x_tile_count = bc.x_tile_count;
+        y_tile_count = bc.y_tile_count;
+        z_tile_count = bc.z_tile_count;
+
+        board = bc.board;
+
+        diameter = new Vector3(0, bc.dark_tile.transform.localScale.y, 0);
 
         PlacePieces();
     }
