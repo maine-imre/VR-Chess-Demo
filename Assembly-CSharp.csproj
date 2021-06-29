@@ -67,6 +67,7 @@
     <Compile Include="Assets/Resources/Scripts/PieceMove.cs" />
     <Compile Include="Assets/Resources/Scripts/Floater.cs" />
     <Compile Include="Assets/Resources/Scripts/RotateBoard.cs" />
+    <Compile Include="Assets/Resources/Scripts/SetPivot.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
