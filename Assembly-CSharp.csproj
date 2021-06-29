@@ -58,12 +58,15 @@
     <Compile Include="Assets/Resources/Scripts/AddPieces.cs" />
     <Compile Include="Assets/Resources/Scripts/TileBehavior.cs" />
     <Compile Include="Assets/Resources/Scripts/FlyCamera.cs" />
+    <Compile Include="Assets/Resources/Scripts/ChessRules.cs" />
+    <Compile Include="Assets/Resources/Scripts/BoardBehavior3D.cs" />
     <Compile Include="Assets/Resources/Scripts/BoardCreate3D.cs" />
     <Compile Include="Assets/Resources/Scripts/BoardBehavior.cs" />
     <Compile Include="Assets/Resources/Scripts/BoardCreate.cs" />
     <Compile Include="Assets/Resources/Scripts/DragAndDropPiece.cs" />
     <Compile Include="Assets/Resources/Scripts/PieceMove.cs" />
-    <Compile Include="Assets/Resources/Scripts/BoardBehavior3D.cs" />
+    <Compile Include="Assets/Resources/Scripts/Floater.cs" />
+    <Compile Include="Assets/Resources/Scripts/RotateBoard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -632,6 +635,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="OEBIF.csproj">
+      <Project>{8AECB0C1-AD79-0BF8-48DF-CFA23F2D680B}</Project>
+      <Name>OEBIF</Name>
+    </ProjectReference>
     <ProjectReference Include="SteamVR_Input_Editor.csproj">
       <Project>{9DB4CA97-2E4A-A947-F119-B5B1AB798178}</Project>
       <Name>SteamVR_Input_Editor</Name>
@@ -647,10 +654,6 @@
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
       <Project>{9F4D24A4-6F9E-FBA8-37CA-50A296F26EE7}</Project>
       <Name>SteamVR_Windows_EditorHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="OEBIF.csproj">
-      <Project>{8AECB0C1-AD79-0BF8-48DF-CFA23F2D680B}</Project>
-      <Name>OEBIF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

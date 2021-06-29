@@ -28,13 +28,17 @@ public class DragAndDropPiece : MonoBehaviour
     // the last highlighted tile's coordinates (to turn it back to non-highlighted) 
     int lastTile_x = -1; int lastTile_y = -1; int lastTile_z = -1;
 
+    // color of the highlighted / non-highlighted tiles
+    Color tileHighlightColor = Color.green;
+    Color tileOriginalColor = Color.white;
+
     void Start()
     {
         // get scripts
-        outline = this.GetComponent<Outline>();
-        bb = this.GetComponentInParent<BoardBehavior3D>();
-        bc = this.GetComponentInParent<BoardCreate3D>();
-        ap = this.GetComponentInParent<AddPieces>();
+        outline = GetComponent<Outline>();
+        bb = GetComponentInParent<BoardBehavior3D>();
+        bc = GetComponentInParent<BoardCreate3D>();
+        ap = GetComponentInParent<AddPieces>();
     }
 
     void OnMouseEnter()
@@ -73,7 +77,7 @@ public class DragAndDropPiece : MonoBehaviour
         mOffset = gameObject.transform.position - GetMouseAsWorldPoint();
 
         // store gameObject pos
-        objectPos = gameObject.transform.position;
+        objectPos = gameObject.transform.position + ap.diameter;
 
         // set the parameters
         mouseDown = true;
@@ -102,30 +106,55 @@ public class DragAndDropPiece : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
 
-
-
+    /*  Called when the dragged piece is dropped by releasing the mouse. Checks
+        whether the piece's world coordinates correspond to a valid board
+        coordinate. If so, moves the piece accordingly.
+     */
     void DropPiece() {
 
-        int[] pos = GetPieceCoordinates();
+        int[] pos = GetCoordinates(transform.position);
         int x_pos = pos[0];
         int y_pos = pos[1];
         int z_pos = pos[2];
 
+        // check if the piece is in the board boundries
         if (0 <= x_pos && x_pos < bc.x_tile_count &&
             0 <= y_pos && x_pos < bc.y_tile_count &&
             0 <= z_pos && x_pos < bc.z_tile_count)
         {
-            gameObject.transform.position = bc.board[x_pos, y_pos, z_pos].transform.position - ap.diameter;
+            // if its in the board boundries, check if its legally valid
+            if (CheckPiecePositionValid(x_pos, y_pos, z_pos))
+            {
+                gameObject.transform.position = bc.board[x_pos, y_pos, z_pos].transform.position - ap.diameter;    
+            }
+            else
+            {
+                // if not, take the piece back to its position
+                gameObject.transform.position = objectPos - ap.diameter;
+
+                // if we highlighted a invalid position (like trying to capture
+                // our piece, disable highlight when we drop the piece
+                // since the piece will go back to its original place.
+                if (bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>())
+                {
+                    bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>().enabled = false;
+                }
+            }
         }
         else
         {
-            gameObject.transform.position = objectPos;
+            gameObject.transform.position = objectPos - ap.diameter;
+
         }
     }
 
+    /*  Uses the current world position of the dragged piece to highlight the 
+        nearest tile. If the dragged piece is too far away from a tile, it does
+        nothing
+     */
     void HighlightTile()
     {
-        int[] pos = GetPieceCoordinates();
+        int[] pos = GetCoordinates(transform.position);
         int x_pos = pos[0];
         int y_pos = pos[1];
         int z_pos = pos[2];
@@ -141,23 +170,112 @@ public class DragAndDropPiece : MonoBehaviour
         }
     }
 
-    int[] GetPieceCoordinates()
+    /*  Turns a world coordinate into a integer coordinate for board indexing
+        Parameters:
+        A world position to translate into coordinates
+     */
+    int[] GetCoordinates(Vector3 worldPosition)
     {
-        int x_pos = Mathf.RoundToInt(this.transform.position.x / bb.x_increments);
-        int y_pos = Mathf.RoundToInt(this.transform.position.y / bb.y_increments);
-        int z_pos = Mathf.RoundToInt(this.transform.position.z / bb.z_increments);
+        int x_pos = Mathf.RoundToInt(worldPosition.x / bb.x_increments);
+        int y_pos = Mathf.RoundToInt(worldPosition.y / bb.y_increments);
+        int z_pos = Mathf.RoundToInt(worldPosition.z / bb.z_increments);
 
         return new int[] {x_pos,y_pos,z_pos};
     }
+    /*  After grabbing a piece and moving it around, changes the color of the 
+        destination tile to indicate where the piece will be placed. If there
+        is no piece on the destination tile, it changes the tile color.
+        Otherwise, it highlights the piece about to be captured.
+
+        Parameters:
+        x_pos, y_pos, z_pos: xyz coordinates of the destination tile
+     */
 
     void ChangeTileColor(int x_pos, int y_pos, int z_pos)
     {
-        bc.board[x_pos, y_pos, z_pos].GetComponent<MeshRenderer>().material.SetColor("_Color", Color.green);
+        // get the coordinates of the starting position of the piece
+        int[] prev_pos = GetCoordinates(objectPos);
+        int prev_x_pos = prev_pos[0];
+        int prev_y_pos = prev_pos[1];
+        int prev_z_pos = prev_pos[2];
+
+        if ((prev_x_pos == x_pos && prev_y_pos == y_pos && prev_z_pos == z_pos) || bc.pieceArray[x_pos, y_pos, z_pos] == null)
+        {
+            // change the color of the tile
+            bc.board[x_pos, y_pos, z_pos].GetComponent<MeshRenderer>().material.SetColor("_Color", tileHighlightColor);
+        }
+        else
+        {
+            // enable highlight for the given piece and set the color to 3rd color
+            bc.pieceArray[x_pos, y_pos, z_pos].GetComponent<Outline>().color = 2;
+            bc.pieceArray[x_pos, y_pos, z_pos].GetComponent<Outline>().enabled = true;
+        }
+
+        // disable the previous highlight since we highlighted a new tile
         if (lastTile_x >= 0)
         {
-            bc.board[lastTile_x, lastTile_y, lastTile_z].GetComponent<MeshRenderer>().material.SetColor("_Color", Color.white);
+            bc.board[lastTile_x, lastTile_y, lastTile_z].GetComponent<MeshRenderer>().material.SetColor("_Color", tileOriginalColor);
+
+            if (!(prev_x_pos == lastTile_x && prev_y_pos == lastTile_y && prev_z_pos == lastTile_z) &&
+                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z] != null)
+            {
+                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>().color = 0;
+                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>().enabled = false;
+            }
+            
         }
+
+        // update the position of the last tile
         lastTile_x = x_pos; lastTile_y = y_pos; lastTile_z = z_pos;
+    }
+
+    // Checks whether a target destination for a piece is valid or not
+    bool CheckPiecePositionValid(int tar_x, int tar_y, int tar_z)
+    {
+        int[] cur_pos = GetCoordinates(objectPos);
+        int cur_x = cur_pos[0];
+        int cur_y = cur_pos[1];
+        int cur_z = cur_pos[2];
+
+        if (bc.pieceArray[tar_x, tar_y, tar_z] != null)
+        {
+            if (CompareTag("dark") && bc.pieceArray[tar_x, tar_y, tar_z].CompareTag("light"))
+            {
+                ModifyBoardPosition(cur_x, cur_y, cur_z, tar_x, tar_y, tar_z);
+                return true;
+            }
+
+            if (CompareTag("light") && bc.pieceArray[tar_x, tar_y, tar_z].CompareTag("dark"))
+            {
+                ModifyBoardPosition(cur_x, cur_y, cur_z, tar_x, tar_y, tar_z);
+                return true;
+            }
+
+            return false;
+        }
+
+        ModifyBoardPosition(cur_x, cur_y, cur_z, tar_x, tar_y, tar_z);
+        return true;
+    }
+
+    /*  Modifies the piece array (the 2D array where pieces are stored) according
+        to the current piece position and target piece position.
+        Captures and removes a piece if its there. If not, just moves the piece.
+     */
+    
+    void ModifyBoardPosition(int cur_x, int cur_y, int cur_z, int tar_x, int tar_y, int tar_z)
+    {
+        if (bc.pieceArray[tar_x, tar_y, tar_z] != null)
+        {
+            Destroy(bc.pieceArray[tar_x, tar_y, tar_z]);
+            bc.pieceArray[tar_x, tar_y, tar_z] = gameObject;
+            bc.pieceArray[cur_x, cur_y, cur_z] = null;
+        }
+        else
+        {
+            bc.pieceArray[tar_x, tar_y, tar_z] = gameObject;
+            bc.pieceArray[cur_x, cur_y, cur_z] = null;
+        }
     }
 
 

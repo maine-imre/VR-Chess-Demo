@@ -9,9 +9,8 @@ public class BoardCreate3D : MonoBehaviour
     public GameObject dark_tile;
     public GameObject light_tile;
 
-    public float width;
-    public float height;
-    public float depth; 
+    [HideInInspector]
+    public float width, height, depth;
 
     // xyz 
     public int x_tile_count;
@@ -21,8 +20,11 @@ public class BoardCreate3D : MonoBehaviour
     // scale multiplier (put in the measurement of the model in blender)
     public float scalar = 4.9f;
 
-    // The board array
+    // Store the tiles in this array
     public GameObject[,,] board;
+
+    // Store the pieces in this array
+    public GameObject[,,] pieceArray;
 
     void Awake()
     {
@@ -33,6 +35,7 @@ public class BoardCreate3D : MonoBehaviour
 
         // Initialize the board array
         board = new GameObject[x_tile_count, y_tile_count, z_tile_count];
+        pieceArray = new GameObject[x_tile_count, y_tile_count, z_tile_count];
 
         PlaceTiles();
 

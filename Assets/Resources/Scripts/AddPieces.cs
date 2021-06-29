@@ -60,15 +60,21 @@ public class AddPieces : MonoBehaviour
         {
             for (int k = 0; k < z_tile_count; k++)
             {
-                Instantiate(wPawn, board[i, 1, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-                Instantiate(bPawn, board[i, y_tile_count - 2, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+                bc.pieceArray[i, 1, k] = Instantiate(wPawn, board[i, 1, k].transform.position - diameter, Quaternion.identity);
+                bc.pieceArray[i, 1, k].transform.parent = gameObject.transform;
+
+                bc.pieceArray[i, y_tile_count - 2, k] = Instantiate(bPawn, board[i, y_tile_count - 2, k].transform.position - diameter, Quaternion.identity);
+                bc.pieceArray[i, y_tile_count - 2, k].transform.parent = gameObject.transform;
             }
                
         }
 
         // Kings
-        Instantiate(wKing, board[4, 0, 4].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-        Instantiate(bKing, board[4, y_tile_count-1, 4].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+        bc.pieceArray[4, 0, 4] = Instantiate(wKing, board[4, 0, 4].transform.position - diameter, Quaternion.identity);
+        bc.pieceArray[4, 0, 4].transform.parent = gameObject.transform;
+
+        bc.pieceArray[4, y_tile_count - 1, 4] = Instantiate(bKing, board[4, y_tile_count-1, 4].transform.position - diameter, Quaternion.identity);
+        bc.pieceArray[4, y_tile_count - 1, 4].transform.parent = gameObject.transform;
 
         // Queens
         for (int i = 3; i <= 5; i++)
@@ -77,8 +83,11 @@ public class AddPieces : MonoBehaviour
             {
                 if (i == 3 || i == 5 || k == 3 || k == 5)
                 {
-                    Instantiate(wQueen, board[i, 0, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-                    Instantiate(bQueen, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+                    bc.pieceArray[i, 0, k] = Instantiate(wQueen, board[i, 0, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, 0, k].transform.parent = gameObject.transform;
+
+                    bc.pieceArray[i, y_tile_count - 1, k] = Instantiate(bQueen, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, y_tile_count - 1, k].transform.parent = gameObject.transform;
                 }              
             }
         }
@@ -90,8 +99,11 @@ public class AddPieces : MonoBehaviour
             {
                 if (i == 2 || i == 6 || k == 2 || k == 6)
                 {
-                    Instantiate(wBishop, board[i, 0, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-                    Instantiate(bBishop, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+                    bc.pieceArray[i, 0, k] = Instantiate(wBishop, board[i, 0, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, 0, k].transform.parent = gameObject.transform;
+
+                    bc.pieceArray[i, y_tile_count - 1, k] = Instantiate(bBishop, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, y_tile_count - 1, k].transform.parent = gameObject.transform;
                 }
             }
         }
@@ -103,8 +115,11 @@ public class AddPieces : MonoBehaviour
             {
                 if (i == 1 || i == 7 || k == 1 || k == 7)
                 {
-                    Instantiate(wKnight, board[i, 0, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-                    Instantiate(bKnight, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+                    bc.pieceArray[i, 0, k] = Instantiate(wKnight, board[i, 0, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, 0, k].transform.parent = gameObject.transform;
+
+                    bc.pieceArray[i, y_tile_count - 1, k] = Instantiate(bKnight, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, y_tile_count - 1, k].transform.parent = gameObject.transform;
                 }
             }
         }
@@ -116,8 +131,11 @@ public class AddPieces : MonoBehaviour
             {
                 if (i == 0 || i == 8 || k == 0 || k == 8)
                 {
-                    Instantiate(wRook, board[i, 0, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
-                    Instantiate(bRook, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity).transform.parent = gameObject.transform;
+                    bc.pieceArray[i, 0, k] = Instantiate(wRook, board[i, 0, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, 0, k].transform.parent = gameObject.transform;
+
+                    bc.pieceArray[i, y_tile_count - 1, k] = Instantiate(bRook, board[i, y_tile_count - 1, k].transform.position - diameter, Quaternion.identity);
+                    bc.pieceArray[i, y_tile_count - 1, k].transform.parent = gameObject.transform;
                 }
             }
         }

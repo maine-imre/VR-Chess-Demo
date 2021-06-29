@@ -1,19 +1,22 @@
 ﻿<Properties StartupConfiguration="{5A76AC48-6FF7-FDC7-D460-114CF9184D08}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/AddPieces.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/RotateBoard.cs">
     <Files>
       <File FileName="Assets/Resources/Scripts/TileBehavior.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/BoardCreate3D.cs" Line="14" Column="12" />
-      <File FileName="Assets/OutlineEffect/OutlineEffect/Outline.cs" Line="47" Column="52" />
-      <File FileName="Assets/BoardBehavior3D.cs" Line="16" Column="31" />
-      <File FileName="Assets/Resources/Scripts/FlyCamera.cs" Line="44" Column="12" />
-      <File FileName="Assets/Resources/Scripts/DragObject.cs" Line="136" Column="39" />
-      <File FileName="Assets/OutlineEffect/OutlineEffect/OutlineEffect.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/AddPieces.cs" Line="33" Column="21" />
+      <File FileName="Assets/Resources/Scripts/BoardCreate3D.cs" />
+      <File FileName="Assets/OutlineEffect/OutlineEffect/Outline.cs" />
+      <File FileName="Assets/Resources/Scripts/FlyCamera.cs" />
+      <File FileName="Assets/Resources/Scripts/AddPieces.cs" />
+      <File FileName="Assets/Resources/Scripts/ChessRules.cs" />
+      <File FileName="Assets/Resources/Scripts/DragAndDropPiece.cs" />
+      <File FileName="Assets/Resources/Scripts/BoardBehavior3D.cs" />
+      <File FileName="Assets/Resources/Scripts/BoardCreate.cs" />
+      <File FileName="Assets/Resources/Scripts/Floater.cs" Line="14" Column="35" />
+      <File FileName="Assets/Resources/Scripts/RotateBoard.cs" Line="52" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="705f2e62-8379-4f5c-9065-3445c626f398" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e9aff27f-96a3-4e69-9b41-e65661f762cd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

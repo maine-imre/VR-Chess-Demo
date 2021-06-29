@@ -11,9 +11,7 @@ public class BoardBehavior3D : MonoBehaviour
     public bool isMoving;
 
     [HideInInspector]
-    public float x_increments;
-    public float y_increments;
-    public float z_increments;
+    public float x_increments, y_increments, z_increments;
 
     void Start()
     {
