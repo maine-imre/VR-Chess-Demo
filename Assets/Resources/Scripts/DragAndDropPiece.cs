@@ -125,12 +125,14 @@ public class DragAndDropPiece : MonoBehaviour
             // if its in the board boundries, check if its legally valid
             if (CheckPiecePositionValid(x_pos, y_pos, z_pos))
             {
-                gameObject.transform.position = bc.board[x_pos, y_pos, z_pos].transform.position - ap.diameter;    
+                gameObject.transform.position = bc.board[x_pos, y_pos, z_pos].transform.position;
+                bc.board[x_pos, y_pos, z_pos].GetComponent<MeshRenderer>().material.SetColor("_Color", GetOriginalTileColor(x_pos, y_pos, z_pos));
+
             }
             else
             {
                 // if not, take the piece back to its position
-                gameObject.transform.position = objectPos - ap.diameter;
+                gameObject.transform.position = objectPos;
 
                 // if we highlighted a invalid position (like trying to capture
                 // our piece, disable highlight when we drop the piece
@@ -143,7 +145,7 @@ public class DragAndDropPiece : MonoBehaviour
         }
         else
         {
-            gameObject.transform.position = objectPos - ap.diameter;
+            gameObject.transform.position = objectPos;
 
         }
     }
@@ -194,12 +196,12 @@ public class DragAndDropPiece : MonoBehaviour
     void ChangeTileColor(int x_pos, int y_pos, int z_pos)
     {
         // get the coordinates of the starting position of the piece
-        int[] prev_pos = GetCoordinates(objectPos);
-        int prev_x_pos = prev_pos[0];
-        int prev_y_pos = prev_pos[1];
-        int prev_z_pos = prev_pos[2];
+        int[] start_pos = GetCoordinates(objectPos);
+        int start_x_pos = start_pos[0];
+        int start_y_pos = start_pos[1];
+        int start_z_pos = start_pos[2];
 
-        if ((prev_x_pos == x_pos && prev_y_pos == y_pos && prev_z_pos == z_pos) || bc.pieceArray[x_pos, y_pos, z_pos] == null)
+        if ((start_x_pos == x_pos && start_y_pos == y_pos && start_z_pos == z_pos) || bc.pieceArray[x_pos, y_pos, z_pos] == null)
         {
             // change the color of the tile
             bc.board[x_pos, y_pos, z_pos].GetComponent<MeshRenderer>().material.SetColor("_Color", tileHighlightColor);
@@ -211,16 +213,18 @@ public class DragAndDropPiece : MonoBehaviour
             bc.pieceArray[x_pos, y_pos, z_pos].GetComponent<Outline>().enabled = true;
         }
 
-        // disable the previous highlight since we highlighted a new tile
+        // disable the startious highlight since we highlighted a new tile
         if (lastTile_x >= 0)
         {
-            bc.board[lastTile_x, lastTile_y, lastTile_z].GetComponent<MeshRenderer>().material.SetColor("_Color", tileOriginalColor);
+            GameObject piece = bc.board[lastTile_x, lastTile_y, lastTile_z];
 
-            if (!(prev_x_pos == lastTile_x && prev_y_pos == lastTile_y && prev_z_pos == lastTile_z) &&
-                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z] != null)
+            piece.GetComponent<MeshRenderer>().material.SetColor("_Color", GetOriginalTileColor(lastTile_x, lastTile_y, lastTile_z));
+
+            // this prevents the highlight bug when a piece is picked up and put in the same location
+            if (!(start_x_pos == lastTile_x && start_y_pos == lastTile_y && start_z_pos == lastTile_z) && piece != null)
             {
-                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>().color = 0;
-                bc.pieceArray[lastTile_x, lastTile_y, lastTile_z].GetComponent<Outline>().enabled = false;
+                piece.GetComponent<Outline>().color = 0;
+                piece.GetComponent<Outline>().enabled = false;
             }
             
         }
@@ -232,13 +236,19 @@ public class DragAndDropPiece : MonoBehaviour
     // Checks whether a target destination for a piece is valid or not
     bool CheckPiecePositionValid(int tar_x, int tar_y, int tar_z)
     {
+        // Get the current position
         int[] cur_pos = GetCoordinates(objectPos);
         int cur_x = cur_pos[0];
         int cur_y = cur_pos[1];
         int cur_z = cur_pos[2];
 
+        // If the current position has a piece there
         if (bc.pieceArray[tar_x, tar_y, tar_z] != null)
         {
+            /* Check if the piece is the same color. If so, you can't capture your piece
+             *  If otherwise, capture the piece
+             */
+
             if (CompareTag("dark") && bc.pieceArray[tar_x, tar_y, tar_z].CompareTag("light"))
             {
                 ModifyBoardPosition(cur_x, cur_y, cur_z, tar_x, tar_y, tar_z);
@@ -278,5 +288,21 @@ public class DragAndDropPiece : MonoBehaviour
         }
     }
 
+
+    /*  Gets the original color of the tile 
+        This is currently just white as the material is white but the color
+        comes from emission
+     */
+    Color GetOriginalTileColor(int x, int y, int z)
+    {
+        if ((x + y + z) % 2 == 0)
+        {
+            return bc.light_tile.GetComponent<MeshRenderer>().sharedMaterial.color;
+        }
+        else
+        {
+            return bc.dark_tile.GetComponent<MeshRenderer>().sharedMaterial.color;
+        }
+    }
 
 }
