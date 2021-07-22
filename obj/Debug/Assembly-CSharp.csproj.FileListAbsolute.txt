@@ -1,0 +1,2 @@
+/Users/Griezwahlm/Documents/GitHub/VR Chess Demo/obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+/Users/Griezwahlm/Documents/GitHub/VR Chess Demo/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
