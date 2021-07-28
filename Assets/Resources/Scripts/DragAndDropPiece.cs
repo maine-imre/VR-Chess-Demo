@@ -24,6 +24,7 @@ public class DragAndDropPiece : MonoBehaviour
     // position of the piece
     // (in case we need to return it when dropped out of bounds)
     Vector3 objectPos;
+	Quaternion objectRot;
 
     // the last highlighted tile's coordinates (to turn it back to non-highlighted) 
     int lastTile_x = -1; int lastTile_y = -1; int lastTile_z = -1;
@@ -84,6 +85,7 @@ public class DragAndDropPiece : MonoBehaviour
 
         // store gameObject pos
         objectPos = gameObject.transform.position;
+	objectRot = gameObject.transform.rotation;
 
         // set the parameters
         mouseDown = true;
@@ -137,6 +139,7 @@ public class DragAndDropPiece : MonoBehaviour
             if (CheckPiecePositionValid(x_pos, y_pos, z_pos))
             {
                 gameObject.transform.position = bc.board[x_pos, y_pos, z_pos].transform.position;
+		gameObject.transform.rotation = objectRot;
                 bc.board[x_pos, y_pos, z_pos].GetComponent<MeshRenderer>().material.SetColor("_Color", GetOriginalTileColor(x_pos, y_pos, z_pos));
 
             }
@@ -144,6 +147,7 @@ public class DragAndDropPiece : MonoBehaviour
             {
                 // if not, take the piece back to its position
                 gameObject.transform.position = objectPos;
+		gameObject.transform.rotation = objectRot;
 
                 // if we highlighted a invalid position (like trying to capture
                 // our piece, disable highlight when we drop the piece
@@ -160,6 +164,7 @@ public class DragAndDropPiece : MonoBehaviour
         else
         {
             gameObject.transform.position = objectPos;
+		gameObject.transform.rotation = objectRot;
 
         }
     }
